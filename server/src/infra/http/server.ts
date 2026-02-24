@@ -9,7 +9,10 @@ import {
 } from 'fastify-type-provider-zod'
 import { errorHandler } from './error-handler'
 import { createUrlRoute } from './routes/create-url'
+import { deleteUrlRoute } from './routes/delete-url'
 import { exportUrlsRoute } from './routes/export-urls'
+import { getAllUrlsRoute } from './routes/get-all-urls'
+import { getUrlRoute } from './routes/get-url'
 
 const server = fastify()
 
@@ -38,6 +41,9 @@ server.register(fastifySwaggerUi, {
 
 server.register(exportUrlsRoute)
 server.register(createUrlRoute)
+server.register(deleteUrlRoute)
+server.register(getUrlRoute)
+server.register(getAllUrlsRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server is running!')

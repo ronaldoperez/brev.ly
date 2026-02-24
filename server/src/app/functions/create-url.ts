@@ -1,5 +1,4 @@
 import type { InferSelectModel } from 'drizzle-orm'
-import { z } from 'zod'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import { type Either, makeLeft, makeRight } from '@/shared/either'
