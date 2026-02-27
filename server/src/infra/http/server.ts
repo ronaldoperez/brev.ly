@@ -7,6 +7,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
+import { env } from '@/env'
 import { errorHandler } from './error-handler'
 import { createUrlRoute } from './routes/create-url'
 import { deleteUrlRoute } from './routes/delete-url'
@@ -45,6 +46,6 @@ server.register(deleteUrlRoute)
 server.register(getUrlRoute)
 server.register(getAllUrlsRoute)
 
-server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
+server.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
   console.log('HTTP server is running!')
 })
