@@ -14,6 +14,7 @@ import { deleteUrlRoute } from './routes/delete-url'
 import { exportUrlsRoute } from './routes/export-urls'
 import { getAllUrlsRoute } from './routes/get-all-urls'
 import { getUrlRoute } from './routes/get-url'
+import { getUrlByShortCodeRoute } from './routes/get-url-by-shortcode'
 
 const server = fastify()
 
@@ -23,7 +24,8 @@ server.setSerializerCompiler(serializerCompiler)
 server.setErrorHandler(errorHandler)
 
 server.register(fastifyCors, {
-  origin: '*',
+  origin: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 })
 
 server.register(fastifySwagger, {
@@ -44,6 +46,7 @@ server.register(exportUrlsRoute)
 server.register(createUrlRoute)
 server.register(deleteUrlRoute)
 server.register(getUrlRoute)
+server.register(getUrlByShortCodeRoute)
 server.register(getAllUrlsRoute)
 
 server.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
