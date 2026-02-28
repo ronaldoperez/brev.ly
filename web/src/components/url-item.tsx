@@ -44,6 +44,11 @@ export function UrlItem({ url }: UrlItemProps) {
    }
 
    async function handleDeleteUrl() {
+      const confirmed = window.confirm(
+         `Tem certeza que deseja excluir o link "${shortCode}"?`
+      )
+      if (!confirmed) return
+
       try {
          await deleteUrlMutation(id)
       } catch (error) {
@@ -69,7 +74,7 @@ export function UrlItem({ url }: UrlItemProps) {
             <p className="text-xs text-gray-500 line-clamp-1">{originalUrl}</p>
          </a>
 
-         <span className="text-xs text-gray-500 mr-5">{clicks} acessos</span>
+         <span className="text-xs text-gray-500 mr-5">{clicks > 1 ? `${clicks} acessos` : `${clicks} acesso`}</span>
 
          <div className="flex gap-2">
             <Button.Root

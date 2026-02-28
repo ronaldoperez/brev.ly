@@ -7,7 +7,7 @@ import { router } from './routes'
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer autoClose={8000} />
+      <ToastContainer autoClose={3000} />
       <RouterProvider router={router} />
     </QueryClientProvider>
   )
