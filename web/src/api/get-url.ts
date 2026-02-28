@@ -1,6 +1,7 @@
 import { api } from '../lib/axios'
 
 interface GetUrlResponse {
+  id: string
   originalUrl: string
 }
 

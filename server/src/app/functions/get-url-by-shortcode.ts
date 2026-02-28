@@ -13,7 +13,7 @@ type GetUrlByShortCodeInput = z.infer<typeof getUrlByShortCodeInput>
 
 export async function getUrlByShortCode(
   input: GetUrlByShortCodeInput
-): Promise<Either<ResourceNotFoundError, { originalUrl: string }>> {
+): Promise<Either<ResourceNotFoundError, { id: string; originalUrl: string }>> {
   const { shortCode } = getUrlByShortCodeInput.parse(input)
 
   const url = await db.query.urls.findFirst({
@@ -32,5 +32,5 @@ export async function getUrlByShortCode(
     .where(eq(schema.urls.shortCode, shortCode))
     .returning()
 
-  return makeRight({ originalUrl: url.originalUrl })
+  return makeRight({ id: url.id, originalUrl: url.originalUrl })
 }

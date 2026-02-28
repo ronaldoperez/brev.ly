@@ -1,7 +1,5 @@
-import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 import { db } from '@/infra/db'
-import { schema } from '@/infra/db/schemas'
 import { type Either, makeLeft, makeRight } from '@/shared/either'
 import { ResourceNotFoundError } from './errors/resource-not-found'
 
@@ -25,12 +23,6 @@ export async function getUrl(
   if (!url) {
     return makeLeft(new ResourceNotFoundError())
   }
-
-  await db
-    .update(schema.urls)
-    .set({ clicks: url.clicks + 1 })
-    .where(eq(schema.urls.id, id))
-    .returning()
 
   return makeRight({ originalUrl: url.originalUrl })
 }
