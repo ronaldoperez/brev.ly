@@ -79,7 +79,7 @@ export function CreateUrlForm() {
 
    return (
       <form
-         className="w-full bg-gray-100 p-6 rounded-lg max-w-96"
+         className="w-full bg-gray-100 p-6 rounded-lg max-w-96 self-start"
          onSubmit={handleSubmit(handleCreateUrl)}
       >
          <fieldset>

@@ -31,7 +31,6 @@ export async function exportUrls(
   const { sql, params } = db
 
     .select({
-      id: schema.urls.id,
       originalUrl: schema.urls.originalUrl,
       shortCode: schema.urls.shortCode,
       clicks: schema.urls.clicks,
@@ -51,11 +50,10 @@ export async function exportUrls(
     delimiter: ',',
     header: true,
     columns: [
-      { key: 'id', header: 'ID' },
-      { key: 'original_url', header: 'Name' },
-      { key: 'short_code', header: 'Short Code' },
-      { key: 'clicks', header: 'Clicks' },
-      { key: 'created_at', header: 'Created at' },
+      { key: 'original_url', header: 'URL original' },
+      { key: 'short_code', header: 'URL encurtada' },
+      { key: 'clicks', header: 'Contagem de acessos' },
+      { key: 'created_at', header: 'Data de criacao' },
     ],
   })
 

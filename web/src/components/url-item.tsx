@@ -1,11 +1,13 @@
 import { Copy, Trash } from '@phosphor-icons/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { deleteUrl } from '../api/delete-url'
 import type { Url } from '../api/get-all-urls'
 import { env } from '../env'
 import { Button } from './button'
+import { ConfirmDialog } from './confirm-dialog'
 
 interface UrlItemProps {
    url: Url
@@ -14,6 +16,7 @@ interface UrlItemProps {
 export function UrlItem({ url }: UrlItemProps) {
    const queryClient = useQueryClient()
    const { id, shortCode, originalUrl, clicks  } = url
+   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false)
 
    const { mutateAsync: deleteUrlMutation, isPending: isLoading } = useMutation({
       mutationFn: deleteUrl,
@@ -33,6 +36,7 @@ export function UrlItem({ url }: UrlItemProps) {
          queryClient.invalidateQueries({ queryKey: ['urls'] })
       },
       onSuccess: () => {
+         setIsConfirmDialogOpen(false)
          toast.success('Url excluída com sucesso!')
       },
    })
@@ -43,14 +47,14 @@ export function UrlItem({ url }: UrlItemProps) {
       toast.success('Url copiada para a área de transferência!')
    }
 
-   async function handleDeleteUrl() {
-      const confirmed = window.confirm(
-         `Tem certeza que deseja excluir o link "${shortCode}"?`
-      )
-      if (!confirmed) return
+   function handleDeleteUrl() {
+      setIsConfirmDialogOpen(true)
+   }
 
+   async function confirmDeleteUrl() {
       try {
          await deleteUrlMutation(id)
+         setIsConfirmDialogOpen(false)
       } catch (error) {
          if (isAxiosError(error)) {
             toast.error(error.response?.data.message)
@@ -61,6 +65,7 @@ export function UrlItem({ url }: UrlItemProps) {
    }
 
    return (
+      <>
       <li className="flex items-center gap-3 py-4 border-t border-gray-200">
          <a
             href={`${env.VITE_APP_URL}/${shortCode}`}
@@ -100,5 +105,15 @@ export function UrlItem({ url }: UrlItemProps) {
             </Button.Root>
          </div>
       </li>
+
+      <ConfirmDialog
+         open={isConfirmDialogOpen}
+         onOpenChange={setIsConfirmDialogOpen}
+         onConfirm={confirmDeleteUrl}
+         isLoading={isLoading}
+         title="Excluir URL"
+         description={`Tem certeza que deseja excluir esta URL "brev.ly/${shortCode}" ?`}
+      />
+      </>
    )
 }

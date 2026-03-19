@@ -35,7 +35,17 @@ export function UrlsList() {
    }
 
    return (
-      <section className="w-full bg-gray-100 p-6 rounded-lg flex-1 max-w-96 md:max-w-full max-h-[396px] relative overflow-y-auto overflow-x-hidden">
+      <section className="
+         w-full
+         bg-gray-100
+         p-6
+         rounded-lg
+         flex-1
+         flex
+         flex-col
+         min-h-0
+         relative
+      ">
 
          <div className="absolute top-0 left-0 right-0">
             <div className="h-1 w-full bg-gray-100">
@@ -61,7 +71,7 @@ export function UrlsList() {
             </Button.Root>
          </div>
 
-         <ul className="mt-5">
+         <ul className="mt-5 overflow-y-auto flex-1 min-h-0 pr-1">
             {isLoading ? (
                <div className="flex flex-col items-center justify-center gap-4 pt-5 border-t border-gray-200 text-sm mt-5">
                   <Spinner size={32} className="text-gray-400 animate-spin" />
